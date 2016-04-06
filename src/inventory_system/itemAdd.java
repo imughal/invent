@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package inventory_system;
+
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.*;
+
 /**
  *
  * @author imran
@@ -153,19 +155,20 @@ public class itemAdd extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     int row = 0;
-    public ArrayList<Object> adding(String cat_id,int rows){
+
+    public ArrayList<Object> adding(String cat_id, int rows) {
         loading(cat_id);
         row = rows + 1;
         this.setVisible(true);
         return rList;
     }
-    
+
     ArrayList<String> qtys = new ArrayList<>();
     ArrayList<String> itemName = new ArrayList<>();
     ArrayList<Object> rList = new ArrayList<>();
-    
-    private void loading(String cat_id){
-                try {
+
+    private void loading(String cat_id) {
+        try {
 
             try (Connection con = databaseCon.getConn()) {
                 String sql = "SELECT * From invitems where cat_id = ?";
@@ -173,22 +176,22 @@ public class itemAdd extends javax.swing.JDialog {
                 st.setString(1, cat_id);
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    
+
                     qtys.add(rs.getString("qty"));
                     //cmbItem.addItem(rs.getString("item"));
                     itemName.add(rs.getString("item"));
                 }
                 con.close();
             }
-            for(String p : itemName){
+            for (String p : itemName) {
                 cmbItem.addItem(p);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    
+
+
     private void SpinQtyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinQtyStateChanged
         int item_qty = (Integer) SpinQty.getValue();
         int item_price = (Integer) unitPrice.getValue();
@@ -210,14 +213,20 @@ public class itemAdd extends javax.swing.JDialog {
     }//GEN-LAST:event_cmbItemItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        rList.add(row);
-        rList.add((String) cmbItem.getSelectedItem());
-        rList.add(SpinQty.getValue().toString());
-        rList.add(unitPrice.getValue().toString());
-        rList.add(tAmount.getText());
-        
-        this.setVisible(false);
-        this.dispose();
+        int avail = Integer.parseInt(tAvail.getText());
+        if ((int) SpinQty.getValue() > avail) {
+            JOptionPane.showMessageDialog(null, "Error, Quantity Out of Stock");
+        } else {
+
+            rList.add(row);
+            rList.add((String) cmbItem.getSelectedItem());
+            rList.add(SpinQty.getValue().toString());
+            rList.add(unitPrice.getValue().toString());
+            rList.add(tAmount.getText());
+
+            this.setVisible(false);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

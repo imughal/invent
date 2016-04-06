@@ -5,6 +5,7 @@
  */
 package inventory_system;
 
+
 import java.util.ArrayList;
 import javax.swing.*;
 import java.sql.*;
@@ -26,15 +27,15 @@ public class saleItemX1 extends javax.swing.JFrame {
         addCat();
         setDate();
     }
-    private void setDate(){
-                SimpleDateFormat sDate = new SimpleDateFormat("dd-MMM-yyyy");
-                Calendar gCal = Calendar.getInstance();
-                gCal.set(year, month, day);
-                //viewStudent.setingText(txtField, sDate.format(gCal.getTime()));
-                txtDate.setText(sDate.format(gCal.getTime()));
+
+    private void setDate() {
+        SimpleDateFormat sDate = new SimpleDateFormat("dd-MMM-yyyy");
+        Calendar gCal = Calendar.getInstance();
+        gCal.set(year, month, day);
+        //viewStudent.setingText(txtField, sDate.format(gCal.getTime()));
+        txtDate.setText(sDate.format(gCal.getTime()));
     }
-    
-    
+
     ArrayList<JButton> buttons = new ArrayList<>();
     ArrayList<String> bNames = new ArrayList<>();
     ArrayList<String> bcat_id = new ArrayList<>();
@@ -42,7 +43,7 @@ public class saleItemX1 extends javax.swing.JFrame {
     int month = Calendar.getInstance().get(Calendar.MONTH);
     int year = Calendar.getInstance().get(Calendar.YEAR);
     int day = Calendar.getInstance().get(Calendar.DATE);
-    
+
     private void addCat() {
         try {
 
@@ -89,10 +90,10 @@ public class saleItemX1 extends javax.swing.JFrame {
     private void columnSum() {
         int total = 0;
         for (int i = 0; i < tableMain.getRowCount(); i++) {
-            
-            int Amount = Integer.parseInt(tableMain.getValueAt(i, 4)+"");
+
+            int Amount = Integer.parseInt(tableMain.getValueAt(i, 4) + "");
             total = Amount + total;
-            
+
         }
         totalAmount.setText(Integer.toString(total));
         int b = total - Integer.parseInt(txtDiscount.getText());
@@ -134,7 +135,6 @@ public class saleItemX1 extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
 
         toolX2.setFloatable(false);
         toolX2.setToolTipText("");
@@ -161,7 +161,7 @@ public class saleItemX1 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "SN", "Item", "Qty", "Unite Price", "Total"
+                "SN", "Item", "Qty", "Unit Price", "Total"
             }
         ) {
             Class[] types = new Class [] {
@@ -187,7 +187,6 @@ public class saleItemX1 extends javax.swing.JFrame {
         if (tableMain.getColumnModel().getColumnCount() > 0) {
             tableMain.getColumnModel().getColumn(0).setResizable(false);
             tableMain.getColumnModel().getColumn(0).setPreferredWidth(40);
-            tableMain.getColumnModel().getColumn(1).setResizable(false);
             tableMain.getColumnModel().getColumn(1).setPreferredWidth(400);
             tableMain.getColumnModel().getColumn(2).setResizable(false);
             tableMain.getColumnModel().getColumn(2).setPreferredWidth(70);
@@ -198,6 +197,11 @@ public class saleItemX1 extends javax.swing.JFrame {
         }
 
         jButton1.setText("Print");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Preview");
 
@@ -285,7 +289,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                     .addComponent(lBalance)
                     .addComponent(totalAmount)
                     .addComponent(txtDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,6 +358,10 @@ public class saleItemX1 extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         txtDate.setText(getDate(txtDate.getText()));
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_jButton1ActionPerformed
     private String getDate(String curDate) {
         String rDate = curDate;
         mDatePicker dp = new mDatePicker(null);
@@ -365,6 +373,7 @@ public class saleItemX1 extends javax.swing.JFrame {
         }
         return rDate;
     }
+
     /**
      * @param args the command line arguments
      */
