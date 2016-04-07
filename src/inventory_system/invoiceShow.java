@@ -5,7 +5,10 @@
  */
 package inventory_system;
 
-
+//import javax.swing.text.html.HTMLEditorKit;
+//import javax.swing.text.html.StyleSheet;
+import javax.swing.text.html.*;
+import javax.swing.text.*;
 
 /**
  *
@@ -19,6 +22,7 @@ public class invoiceShow extends javax.swing.JDialog {
     public invoiceShow(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        runnn();
     }
 
     /**
@@ -68,10 +72,10 @@ public class invoiceShow extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -80,6 +84,126 @@ public class invoiceShow extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    private void runnn() {
+        HTMLEditorKit kit = new HTMLEditorKit();
+        ePanel.setEditorKit(kit);
+
+        StyleSheet styleSheet = kit.getStyleSheet();
+        styleSheet.addRule(".clearfix:after {content: \"\";display: table;clear: both;}");
+        styleSheet.addRule("a {color: #5D6975;text-decoration: underline;}");
+        styleSheet.addRule("body {position: relative;width: 21cm;  height: 29.7cm; margin: 0 auto; color: #001028;background: #FFFFFF; font-family: Arial, sans-serif; font-size: 12px; font-family: Arial;}");
+        styleSheet.addRule("header {padding: 10px 0;margin-bottom: 30px;}");
+        styleSheet.addRule("#logo {text-align: center;margin-bottom: 10px;}");
+        styleSheet.addRule("#logo img {width: 90px;}");
+        styleSheet.addRule("h1 {border-top: 1px solid  #5D6975;border-bottom: 1px solid  #5D6975;color: #5D6975;font-size: 2.4em;line-height: 1.4em;font-weight: normal;text-align: center;margin: 0 0 20px 0;background: url(dimension.png);}");
+        styleSheet.addRule("#project {float: left;}");
+        styleSheet.addRule("#project span {color: #5D6975;text-align: right;width: 52px;margin-right: 10px;display: inline-block;font-size: 0.8em;}");
+        styleSheet.addRule("#company {float: right;text-align: right;}");
+        styleSheet.addRule("#project div,#company div {white-space: nowrap;}");
+        styleSheet.addRule("table {width: 100%;border-collapse: collapse;border-spacing: 0;margin-bottom: 20px;}");
+        styleSheet.addRule("table tr:nth-child(2n-1) td {background: #F5F5F5;}");
+        styleSheet.addRule("table th,table td {text-align: center;}");
+        styleSheet.addRule("table th {padding: 5px 20px;color: #5D6975;border-bottom: 1px solid #C1CED9;white-space: nowrap;font-weight: normal;}");
+        styleSheet.addRule("table th,table td {text-align: center;}");
+        styleSheet.addRule("table .service,table .desc {text-align: left;}");
+        styleSheet.addRule("table td {padding: 20px;text-align: right;}");
+        styleSheet.addRule("table td.service,table td.desc {vertical-align: top;}");
+        styleSheet.addRule("table td.unit,table td.qty,table td.total {font-size: 1.2em;}");
+        styleSheet.addRule("table td.grand {border-top: 1px solid #5D6975;}");
+        styleSheet.addRule("#notices .notice {color: #5D6975;font-size: 1.2em;}");
+        styleSheet.addRule("footer {color: #5D6975;width: 100%;height: 30px;position: absolute;bottom: 0;border-top: 1px solid #C1CED9;padding: 8px 0;text-align: center;}");
+
+        String htmlString = "<html>\n" +
+"  <body>\n" +
+"    <header class=\"clearfix\">\n" +
+"      <div id=\"logo\">\n" +
+"        <img src=\"logo.png\">\n" +
+"      </div>\n" +
+"      <h1>INVOICE 3-2-1</h1>\n" +
+"      <div id=\"company\" class=\"clearfix\">\n" +
+"        <div>Company Name</div>\n" +
+"        <div>455 Foggy Heights,<br /> AZ 85004, US</div>\n" +
+"        <div>(602) 519-0450</div>\n" +
+"        <div><a href=\"mailto:company@example.com\">company@example.com</a></div>\n" +
+"      </div>\n" +
+"      <div id=\"project\">\n" +
+"        <div><span>PROJECT</span> Website development</div>\n" +
+"        <div><span>CLIENT</span> John Doe</div>\n" +
+"        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>\n" +
+"        <div><span>EMAIL</span> <a href=\"mailto:john@example.com\">john@example.com</a></div>\n" +
+"        <div><span>DATE</span> August 17, 2015</div>\n" +
+"        <div><span>DUE DATE</span> September 17, 2015</div>\n" +
+"      </div>\n" +
+"    </header>\n" +
+"    <main>\n" +
+"      <table>\n" +
+"        <thead>\n" +
+"          <tr>\n" +
+"            <th class=\"service\">SERVICE</th>\n" +
+"            <th class=\"desc\">DESCRIPTION</th>\n" +
+"            <th>PRICE</th>\n" +
+"            <th>QTY</th>\n" +
+"            <th>TOTAL</th>\n" +
+"          </tr>\n" +
+"        </thead>\n" +
+"        <tbody>\n" +
+"          <tr>\n" +
+"            <td class=\"service\">Design</td>\n" +
+"            <td class=\"desc\">Creating a recognizable design solution based on the company's existing visual identity</td>\n" +
+"            <td class=\"unit\">$40.00</td>\n" +
+"            <td class=\"qty\">26</td>\n" +
+"            <td class=\"total\">$1,040.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td class=\"service\">Development</td>\n" +
+"            <td class=\"desc\">Developing a Content Management System-based Website</td>\n" +
+"            <td class=\"unit\">$40.00</td>\n" +
+"            <td class=\"qty\">80</td>\n" +
+"            <td class=\"total\">$3,200.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td class=\"service\">SEO</td>\n" +
+"            <td class=\"desc\">Optimize the site for search engines (SEO)</td>\n" +
+"            <td class=\"unit\">$40.00</td>\n" +
+"            <td class=\"qty\">20</td>\n" +
+"            <td class=\"total\">$800.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td class=\"service\">Training</td>\n" +
+"            <td class=\"desc\">Initial training sessions for staff responsible for uploading web content</td>\n" +
+"            <td class=\"unit\">$40.00</td>\n" +
+"            <td class=\"qty\">4</td>\n" +
+"            <td class=\"total\">$160.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td colspan=\"4\">SUBTOTAL</td>\n" +
+"            <td class=\"total\">$5,200.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td colspan=\"4\">TAX 25%</td>\n" +
+"            <td class=\"total\">$1,300.00</td>\n" +
+"          </tr>\n" +
+"          <tr>\n" +
+"            <td colspan=\"4\" class=\"grand total\">GRAND TOTAL</td>\n" +
+"            <td class=\"grand total\">$6,500.00</td>\n" +
+"          </tr>\n" +
+"        </tbody>\n" +
+"      </table>\n" +
+"      <div id=\"notices\">\n" +
+"        <div>NOTICE:</div>\n" +
+"        <div class=\"notice\">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>\n" +
+"      </div>\n" +
+"    </main>\n" +
+"    <footer>\n" +
+"      Invoice was created on a computer and is valid without the signature and seal.\n" +
+"    </footer>\n" +
+"  </body>\n" +
+"</html>";
+        // create a document, set it on the jeditorpane, then add the html
+        Document doc = kit.createDefaultDocument();
+        ePanel.setDocument(doc);
+        ePanel.setText(htmlString);
+    }
 
     /**
      * @param args the command line arguments
