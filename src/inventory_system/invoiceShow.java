@@ -21,6 +21,7 @@ public class invoiceShow extends javax.swing.JDialog {
      */
     public invoiceShow(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        //this.setLocationRelativeTo(null);
         initComponents();
         runnn();
     }
@@ -39,6 +40,7 @@ public class invoiceShow extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 102, 102));
 
         ePanel.setEditable(false);
         try {
@@ -62,17 +64,17 @@ public class invoiceShow extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 367, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -94,8 +96,8 @@ public class invoiceShow extends javax.swing.JDialog {
         styleSheet.addRule("body {position: relative;width: 21cm;  height: 29.7cm; margin: 0 auto; color: #001028;background: #FFFFFF; font-family: Arial, sans-serif; font-size: 12px; font-family: Arial;}");
         styleSheet.addRule("header {padding: 10px 0;margin-bottom: 30px;}");
         styleSheet.addRule("#logo {text-align: center;margin-bottom: 10px;}");
-        styleSheet.addRule("#logo img {width: 90px;}");
-        styleSheet.addRule("h1 {border-top: 1px solid  #5D6975;border-bottom: 1px solid  #5D6975;color: #5D6975;font-size: 2.4em;line-height: 1.4em;font-weight: normal;text-align: center;margin: 0 0 20px 0;background: url(dimension.png);}");
+        styleSheet.addRule("#logo img {width: 20px; height: 20px;}");
+        styleSheet.addRule("h1 {border-top: 1px solid  #5D6975;border-bottom: 1px solid  #5D6975;color: #5D6975;font-size: 2.4em;line-height: 1.4em;font-weight: normal;text-align: center;margin: 0 0 20px 0;background: url("+getClass().getResource("/inventory_system/dimension.png")+");}");
         styleSheet.addRule("#project {float: left;}");
         styleSheet.addRule("#project span {color: #5D6975;text-align: right;width: 52px;margin-right: 10px;display: inline-block;font-size: 0.8em;}");
         styleSheet.addRule("#company {float: right;text-align: right;}");
@@ -104,7 +106,6 @@ public class invoiceShow extends javax.swing.JDialog {
         styleSheet.addRule("table tr:nth-child(2n-1) td {background: #F5F5F5;}");
         styleSheet.addRule("table th,table td {text-align: center;}");
         styleSheet.addRule("table th {padding: 5px 20px;color: #5D6975;border-bottom: 1px solid #C1CED9;white-space: nowrap;font-weight: normal;}");
-        styleSheet.addRule("table th,table td {text-align: center;}");
         styleSheet.addRule("table .service,table .desc {text-align: left;}");
         styleSheet.addRule("table td {padding: 20px;text-align: right;}");
         styleSheet.addRule("table td.service,table td.desc {vertical-align: top;}");
@@ -117,7 +118,7 @@ public class invoiceShow extends javax.swing.JDialog {
 "  <body>\n" +
 "    <header class=\"clearfix\">\n" +
 "      <div id=\"logo\">\n" +
-"        <img src=\"logo.png\">\n" +
+"        <img src=\""+getClass().getResource("/inventory_system/logo.png")+"\">\n" +
 "      </div>\n" +
 "      <h1>INVOICE 3-2-1</h1>\n" +
 "      <div id=\"company\" class=\"clearfix\">\n" +
