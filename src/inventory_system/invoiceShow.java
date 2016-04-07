@@ -112,7 +112,7 @@ public class invoiceShow extends javax.swing.JDialog {
         styleSheet.addRule("table td.unit,table td.qty,table td.total {font-size: 1.2em;}");
         styleSheet.addRule("table td.grand {border-top: 1px solid #5D6975;}");
         styleSheet.addRule("#notices .notice {color: #5D6975;font-size: 1.2em;}");
-        styleSheet.addRule("footer {color: #5D6975;width: 100%;height: 30px;position: absolute;bottom: 0;border-top: 1px solid #C1CED9;padding: 8px 0;text-align: center;}");
+        styleSheet.addRule(".footer {color: #5D6975;width: 100%;height: 30px;position: absolute;bottom: 0;border-top: 1px solid #C1CED9;padding: 1px 0;text-align: center;}");
 
         String htmlString = "<html>\n" +
 "  <body>\n" +
@@ -195,9 +195,9 @@ public class invoiceShow extends javax.swing.JDialog {
 "        <div class=\"notice\">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>\n" +
 "      </div>\n" +
 "    </main>\n" +
-"    <footer>\n" +
+"    <div class=\"footer\">\n" +
 "      Invoice was created on a computer and is valid without the signature and seal.\n" +
-"    </footer>\n" +
+"    </div>\n" +
 "  </body>\n" +
 "</html>";
         // create a document, set it on the jeditorpane, then add the html
