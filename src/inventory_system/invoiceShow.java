@@ -7,6 +7,7 @@ package inventory_system;
 
 //import javax.swing.text.html.HTMLEditorKit;
 //import javax.swing.text.html.StyleSheet;
+import java.awt.GraphicsEnvironment;
 import javax.swing.text.html.*;
 import javax.swing.text.*;
 
@@ -22,7 +23,9 @@ public class invoiceShow extends javax.swing.JDialog {
     public invoiceShow(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         //this.setLocationRelativeTo(null);
+         
         initComponents();
+        this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
         runnn();
     }
 
