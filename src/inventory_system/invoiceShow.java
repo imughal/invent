@@ -7,6 +7,11 @@ package inventory_system;
 
 //import javax.swing.text.html.HTMLEditorKit;
 //import javax.swing.text.html.StyleSheet;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.text.html.*;
 import javax.swing.text.*;
 
@@ -84,121 +89,308 @@ public class invoiceShow extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        PrinterJob pjob = PrinterJob.getPrinterJob();
+        PageFormat preformat = pjob.defaultPage();
+        //preformat.setOrientation(PageFormat.LANDSCAPE);
+        PageFormat postformat = pjob.pageDialog(preformat);
+//If user does not hit cancel then print.
+        if (preformat != postformat) {
+            //Set print component
+            pjob.setPrintable(new Printer(ePanel), postformat);
+            if (pjob.printDialog()) {
+                try {
+                    pjob.print();
+                } catch (PrinterException ex) {
+                    Logger.getLogger(invoiceShow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
     private void runnn() {
         HTMLEditorKit kit = new HTMLEditorKit();
         ePanel.setEditorKit(kit);
 
-        StyleSheet styleSheet = kit.getStyleSheet();
-        styleSheet.addRule(".clearfix:after {content: \"\";display: table;clear: both;}");
-        styleSheet.addRule("a {color: #5D6975;text-decoration: underline;}");
-        styleSheet.addRule("body {position: relative;width: 21cm;  height: 29.7cm; margin: 0 auto; color: #001028;background: #FFFFFF; font-family: Arial, sans-serif; font-size: 12px; font-family: Arial;}");
-        styleSheet.addRule("header {padding: 10px 0;margin-bottom: 30px;}");
-        styleSheet.addRule("#logo {text-align: center;margin-bottom: 10px;}");
-        styleSheet.addRule("#logo img {width: 20px; height: 20px;}");
-        styleSheet.addRule("h1 {border-top: 1px solid  #5D6975;border-bottom: 1px solid  #5D6975;color: #5D6975;font-size: 2.4em;line-height: 1.4em;font-weight: normal;text-align: center;margin: 0 0 20px 0;background: url("+getClass().getResource("/inventory_system/dimension.png")+");}");
-        styleSheet.addRule("#project {float: left;}");
-        styleSheet.addRule("#project span {color: #5D6975;text-align: right;width: 52px;margin-right: 10px;display: inline-block;font-size: 0.8em;}");
-        styleSheet.addRule("#company {float: right;text-align: right;}");
-        styleSheet.addRule("#project div,#company div {white-space: nowrap;}");
-        styleSheet.addRule("table {width: 100%;border-collapse: collapse;border-spacing: 0;margin-bottom: 20px;}");
-        styleSheet.addRule("table tr:nth-child(2n-1) td {background: #F5F5F5;}");
-        styleSheet.addRule("table th,table td {text-align: center;}");
-        styleSheet.addRule("table th {padding: 5px 20px;color: #5D6975;border-bottom: 1px solid #C1CED9;white-space: nowrap;font-weight: normal;}");
-        styleSheet.addRule("table .service,table .desc {text-align: left;}");
-        styleSheet.addRule("table td {padding: 20px;text-align: right;}");
-        styleSheet.addRule("table td.service,table td.desc {vertical-align: top;}");
-        styleSheet.addRule("table td.unit,table td.qty,table td.total {font-size: 1.2em;}");
-        styleSheet.addRule("table td.grand {border-top: 1px solid #5D6975;}");
-        styleSheet.addRule("#notices .notice {color: #5D6975;font-size: 1.2em;}");
-        styleSheet.addRule(".footer {color: #5D6975;width: 100%;height: 30px;position: absolute;bottom: 0;border-top: 1px solid #C1CED9;padding: 1px 0;text-align: center;}");
+//        StyleSheet styleSheet = kit.getStyleSheet();
+//        styleSheet.addRule(".clearfix:after {content: \"\";display: table;clear: both;}");
+//        styleSheet.addRule("a {color: #5D6975;text-decoration: underline;}");
+//        styleSheet.addRule("body {position: relative;width: 21cm;  height: 29.7cm; margin: 0 auto; color: #001028;background: #FFFFFF; font-family: Arial, sans-serif; font-size: 12px; font-family: Arial;}");
+//        styleSheet.addRule("header {padding: 10px 0;margin-bottom: 30px;}");
+//        styleSheet.addRule("#logo {text-align: center;margin-bottom: 10px;}");
+//        styleSheet.addRule("#logo img {width: 20px; height: 20px;}");
+//        styleSheet.addRule("h1 {border-top: 1px solid  #5D6975;border-bottom: 1px solid  #5D6975;color: #5D6975;font-size: 2.4em;line-height: 1.4em;font-weight: normal;text-align: center;margin: 0 0 20px 0;background: url("+getClass().getResource("/inventory_system/dimension.png")+");}");
+//        styleSheet.addRule("#project {float: left;}");
+//        styleSheet.addRule("#project span {color: #5D6975;text-align: right;width: 52px;margin-right: 10px;display: inline-block;font-size: 0.8em;}");
+//        styleSheet.addRule("#company {float: right;text-align: right;}");
+//        styleSheet.addRule("#project div,#company div {white-space: nowrap;}");
+//        styleSheet.addRule("table {width: 100%;border-collapse: collapse;border-spacing: 0;margin-bottom: 20px;}");
+//        styleSheet.addRule("table tr:nth-child(2n-1) td {background: #F5F5F5;}");
+//        styleSheet.addRule("table th,table td {text-align: center;}");
+//        styleSheet.addRule("table th {padding: 5px 20px;color: #5D6975;border-bottom: 1px solid #C1CED9;white-space: nowrap;font-weight: normal;}");
+//        styleSheet.addRule("table .service,table .desc {text-align: left;}");
+//        styleSheet.addRule("table td {padding: 20px;text-align: right;}");
+//        styleSheet.addRule("table td.service,table td.desc {vertical-align: top;}");
+//        styleSheet.addRule("table td.unit,table td.qty,table td.total {font-size: 1.2em;}");
+//        styleSheet.addRule("table td.grand {border-top: 1px solid #5D6975;}");
+//        styleSheet.addRule("#notices .notice {color: #5D6975;font-size: 1.2em;}");
+//        styleSheet.addRule(".footer {color: #5D6975;width: 100%;height: 30px;position: absolute;bottom: 0;border-top: 1px solid #C1CED9;padding: 1px 0;text-align: center;}");
 
-        String htmlString = "<html>\n" +
-"  <body>\n" +
-"    <header class=\"clearfix\">\n" +
-"      <div id=\"logo\">\n" +
-"        <img src=\""+getClass().getResource("/inventory_system/logo.png")+"\">\n" +
-"      </div>\n" +
-"      <h1>INVOICE 3-2-1</h1>\n" +
-"      <div id=\"company\" class=\"clearfix\">\n" +
-"        <div>Company Name</div>\n" +
-"        <div>455 Foggy Heights,<br /> AZ 85004, US</div>\n" +
-"        <div>(602) 519-0450</div>\n" +
-"        <div><a href=\"mailto:company@example.com\">company@example.com</a></div>\n" +
-"      </div>\n" +
-"      <div id=\"project\">\n" +
-"        <div><span>PROJECT</span> Website development</div>\n" +
-"        <div><span>CLIENT</span> John Doe</div>\n" +
-"        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>\n" +
-"        <div><span>EMAIL</span> <a href=\"mailto:john@example.com\">john@example.com</a></div>\n" +
-"        <div><span>DATE</span> August 17, 2015</div>\n" +
-"        <div><span>DUE DATE</span> September 17, 2015</div>\n" +
-"      </div>\n" +
-"    </header>\n" +
-"    <main>\n" +
-"      <table>\n" +
-"        <thead>\n" +
-"          <tr>\n" +
-"            <th class=\"service\">SERVICE</th>\n" +
-"            <th class=\"desc\">DESCRIPTION</th>\n" +
-"            <th>PRICE</th>\n" +
-"            <th>QTY</th>\n" +
-"            <th>TOTAL</th>\n" +
-"          </tr>\n" +
-"        </thead>\n" +
-"        <tbody>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Design</td>\n" +
-"            <td class=\"desc\">Creating a recognizable design solution based on the company's existing visual identity</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">26</td>\n" +
-"            <td class=\"total\">$1,040.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Development</td>\n" +
-"            <td class=\"desc\">Developing a Content Management System-based Website</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">80</td>\n" +
-"            <td class=\"total\">$3,200.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">SEO</td>\n" +
-"            <td class=\"desc\">Optimize the site for search engines (SEO)</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">20</td>\n" +
-"            <td class=\"total\">$800.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td class=\"service\">Training</td>\n" +
-"            <td class=\"desc\">Initial training sessions for staff responsible for uploading web content</td>\n" +
-"            <td class=\"unit\">$40.00</td>\n" +
-"            <td class=\"qty\">4</td>\n" +
-"            <td class=\"total\">$160.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\">SUBTOTAL</td>\n" +
-"            <td class=\"total\">$5,200.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\">TAX 25%</td>\n" +
-"            <td class=\"total\">$1,300.00</td>\n" +
-"          </tr>\n" +
-"          <tr>\n" +
-"            <td colspan=\"4\" class=\"grand total\">GRAND TOTAL</td>\n" +
-"            <td class=\"grand total\">$6,500.00</td>\n" +
-"          </tr>\n" +
-"        </tbody>\n" +
-"      </table>\n" +
-"      <div id=\"notices\">\n" +
-"        <div>NOTICE:</div>\n" +
-"        <div class=\"notice\">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>\n" +
-"      </div>\n" +
-"    </main>\n" +
-"    <div class=\"footer\">\n" +
-"      Invoice was created on a computer and is valid without the signature and seal.\n" +
+//        String htmlString = "<html>\n" +
+//"  <body>\n" +
+//"    <header class=\"clearfix\">\n" +
+//"      <div id=\"logo\">\n" +
+//"        <img src=\""+getClass().getResource("/inventory_system/logo.png")+"\">\n" +
+//"      </div>\n" +
+//"      <h1>INVOICE 3-2-1</h1>\n" +
+//"      <div id=\"company\" class=\"clearfix\">\n" +
+//"        <div>Company Name</div>\n" +
+//"        <div>455 Foggy Heights,<br /> AZ 85004, US</div>\n" +
+//"        <div>(602) 519-0450</div>\n" +
+//"        <div><a href=\"mailto:company@example.com\">company@example.com</a></div>\n" +
+//"      </div>\n" +
+//"      <div id=\"project\">\n" +
+//"        <div><span>PROJECT</span> Website development</div>\n" +
+//"        <div><span>CLIENT</span> John Doe</div>\n" +
+//"        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>\n" +
+//"        <div><span>EMAIL</span> <a href=\"mailto:john@example.com\">john@example.com</a></div>\n" +
+//"        <div><span>DATE</span> August 17, 2015</div>\n" +
+//"        <div><span>DUE DATE</span> September 17, 2015</div>\n" +
+//"      </div>\n" +
+//"    </header>\n" +
+//"    <main>\n" +
+//"      <table>\n" +
+//"        <thead>\n" +
+//"          <tr>\n" +
+//"            <th class=\"service\">SERVICE</th>\n" +
+//"            <th class=\"desc\">DESCRIPTION</th>\n" +
+//"            <th>PRICE</th>\n" +
+//"            <th>QTY</th>\n" +
+//"            <th>TOTAL</th>\n" +
+//"          </tr>\n" +
+//"        </thead>\n" +
+//"        <tbody>\n" +
+//"          <tr>\n" +
+//"            <td class=\"service\">Design</td>\n" +
+//"            <td class=\"desc\">Creating a recognizable design solution based on the company's existing visual identity</td>\n" +
+//"            <td class=\"unit\">$40.00</td>\n" +
+//"            <td class=\"qty\">26</td>\n" +
+//"            <td class=\"total\">$1,040.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td class=\"service\">Development</td>\n" +
+//"            <td class=\"desc\">Developing a Content Management System-based Website</td>\n" +
+//"            <td class=\"unit\">$40.00</td>\n" +
+//"            <td class=\"qty\">80</td>\n" +
+//"            <td class=\"total\">$3,200.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td class=\"service\">SEO</td>\n" +
+//"            <td class=\"desc\">Optimize the site for search engines (SEO)</td>\n" +
+//"            <td class=\"unit\">$40.00</td>\n" +
+//"            <td class=\"qty\">20</td>\n" +
+//"            <td class=\"total\">$800.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td class=\"service\">Training</td>\n" +
+//"            <td class=\"desc\">Initial training sessions for staff responsible for uploading web content</td>\n" +
+//"            <td class=\"unit\">$40.00</td>\n" +
+//"            <td class=\"qty\">4</td>\n" +
+//"            <td class=\"total\">$160.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td colspan=\"4\">SUBTOTAL</td>\n" +
+//"            <td class=\"total\">$5,200.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td colspan=\"4\">TAX 25%</td>\n" +
+//"            <td class=\"total\">$1,300.00</td>\n" +
+//"          </tr>\n" +
+//"          <tr>\n" +
+//"            <td colspan=\"4\" class=\"grand total\">GRAND TOTAL</td>\n" +
+//"            <td class=\"grand total\">$6,500.00</td>\n" +
+//"          </tr>\n" +
+//"        </tbody>\n" +
+//"      </table>\n" +
+//"      <div id=\"notices\">\n" +
+//"        <div>NOTICE:</div>\n" +
+//"        <div class=\"notice\">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>\n" +
+//"      </div>\n" +
+//"    </main>\n" +
+//"    <div class=\"footer\">\n" +
+//"      Invoice was created on a computer and is valid without the signature and seal.\n" +
+//"    </div>\n" +
+//"  </body>\n" +
+//"</html>";
+
+String htmlString = "<html>\n" +
+"<head>\n" +
+"    <meta charset=\"utf-8\">\n" +
+"    <title>A simple, clean, and responsive HTML invoice template</title>\n" +
+"    \n" +
+"    <style>\n" +
+"    .invoice-box{\n" +
+"        max-width:800px;\n" +
+"        margin:auto;\n" +
+"        padding:30px;\n" +
+"        border:1px solid #eee;\n" +
+"        box-shadow:0 0 10px rgba(0, 0, 0, .15);\n" +
+"        font-size:16px;\n" +
+"        line-height:24px;\n" +
+"        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;\n" +
+"        color:#555;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table{\n" +
+"        width:100%;\n" +
+"        line-height:inherit;\n" +
+"        text-align:left;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table td{\n" +
+"        padding:5px;\n" +
+"        vertical-align:top;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr td:nth-child(2){\n" +
+"        text-align:right;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.top table td{\n" +
+"        padding-bottom:20px;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.top table td.title{\n" +
+"        font-size:45px;\n" +
+"        line-height:45px;\n" +
+"        color:#333;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.information table td{\n" +
+"        padding-bottom:40px;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.heading td{\n" +
+"        background:#eee;\n" +
+"        border-bottom:1px solid #ddd;\n" +
+"        font-weight:bold;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.details td{\n" +
+"        padding-bottom:20px;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.item td{\n" +
+"        border-bottom:1px solid #eee;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.item.last td{\n" +
+"        border-bottom:none;\n" +
+"    }\n" +
+"    \n" +
+"    .invoice-box table tr.total td:nth-child(2){\n" +
+"        border-top:2px solid #eee;\n" +
+"        font-weight:bold;\n" +
+"    }\n" +
+"    \n" +
+"    @media only screen and (max-width: 600px) {\n" +
+"        .invoice-box table tr.top table td{\n" +
+"            width:100%;\n" +
+"            display:block;\n" +
+"            text-align:center;\n" +
+"        }\n" +
+"        \n" +
+"        .invoice-box table tr.information table td{\n" +
+"            width:100%;\n" +
+"            display:block;\n" +
+"            text-align:center;\n" +
+"        }\n" +
+"    }\n" +
+"    </style>\n" +
+"</head>\n" +
+"\n" +
+"<body>\n" +
+"    <div class=\"invoice-box\">\n" +
+"        <table cellpadding=\"0\" cellspacing=\"0\">\n" +
+"            <tr class=\"top\">\n" +
+"                <td colspan=\"2\">\n" +
+"                    <table>\n" +
+"                        <tr>\n" +
+"                            <td class=\"title\">\n" +
+"                                <img src=\"http://nextstepwebs.com/images/logo.png\" style=\"width:100%; max-width:300px;\">\n" +
+"                            </td>\n" +
+"                            \n" +
+"                            <td>\n" +
+"                                Invoice #: 123<br>\n" +
+"                                Created: January 1, 2015<br>\n" +
+"                                Due: February 1, 2015\n" +
+"                            </td>\n" +
+"                        </tr>\n" +
+"                    </table>\n" +
+"                </td>\n" +
+"            </tr>            \n" +
+"            <tr class=\"information\">\n" +
+"                <td colspan=\"2\">\n" +
+"                    <table>\n" +
+"                        <tr>\n" +
+"                            <td>\n" +
+"                                Next Step Webs, Inc.<br>\n" +
+"                                12345 Sunny Road<br>\n" +
+"                                Sunnyville, TX 12345\n" +
+"                            </td>\n" +
+"                            \n" +
+"                            <td>\n" +
+"                                Acme Corp.<br>\n" +
+"                                John Doe<br>\n" +
+"                                john@example.com\n" +
+"                            </td>\n" +
+"                        </tr>\n" +
+"                    </table>\n" +
+"                </td>\n" +
+"            </tr>            \n" +
+"            <tr class=\"heading\">\n" +
+"                <td>\n" +
+"                    Item\n" +
+"                </td>\n" +
+"                \n" +
+"                <td>\n" +
+"                    Price\n" +
+"                </td>\n" +
+"            </tr>            \n" +
+"            <tr class=\"item\">\n" +
+"                <td>\n" +
+"                    Website design\n" +
+"                </td>\n" +
+"                \n" +
+"                <td>\n" +
+"                    $300.00\n" +
+"                </td>\n" +
+"            </tr>            \n" +
+"            <tr class=\"item\">\n" +
+"                <td>\n" +
+"                    Hosting (3 months)\n" +
+"                </td>\n" +
+"                \n" +
+"                <td>\n" +
+"                    $75.00\n" +
+"                </td>\n" +
+"            </tr>           \n" +
+"            <tr class=\"item last\">\n" +
+"                <td>\n" +
+"                    Domain name (1 year)\n" +
+"                </td>\n" +
+"                \n" +
+"                <td>\n" +
+"                    $10.00\n" +
+"                </td>\n" +
+"            </tr>            \n" +
+"            <tr class=\"total\">\n" +
+"                <td></td>                \n" +
+"                <td>\n" +
+"                   Total: $385.00\n" +
+"                </td>\n" +
+"            </tr>\n" +
+"        </table>\n" +
 "    </div>\n" +
-"  </body>\n" +
+"</body>\n" +
 "</html>";
         // create a document, set it on the jeditorpane, then add the html
         Document doc = kit.createDefaultDocument();
