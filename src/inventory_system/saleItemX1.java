@@ -122,8 +122,6 @@ public class saleItemX1 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableMain = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         totalAmount = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -131,7 +129,6 @@ public class saleItemX1 extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtDiscount = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -203,10 +200,6 @@ public class saleItemX1 extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Preview");
-
-        jButton3.setText("Save");
-
         jLabel5.setText("Total");
 
         totalAmount.setText("0");
@@ -225,8 +218,6 @@ public class saleItemX1 extends javax.swing.JFrame {
         });
 
         jButton4.setText("Cancel");
-
-        jButton5.setText("Close");
 
         jButton6.setText("...");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -270,16 +261,10 @@ public class saleItemX1 extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5)
-                .addGap(118, 118, 118)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(305, 305, 305)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel10)
@@ -314,12 +299,9 @@ public class saleItemX1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
                     .addComponent(jLabel5)
                     .addComponent(totalAmount)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -411,10 +393,7 @@ public class saleItemX1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
