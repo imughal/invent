@@ -5,12 +5,14 @@
  */
 package inventory_system;
 
-
 import java.util.ArrayList;
 import javax.swing.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,10 +28,11 @@ public class saleItemX1 extends javax.swing.JFrame {
         initComponents();
         addCat();
         setDate();
+        setInvoiceNumber();
     }
 
     private void setDate() {
-        SimpleDateFormat sDate = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat sDate = new SimpleDateFormat("dd-MM-yyyy");
         Calendar gCal = Calendar.getInstance();
         gCal.set(year, month, day);
         //viewStudent.setingText(txtField, sDate.format(gCal.getTime()));
@@ -43,6 +46,7 @@ public class saleItemX1 extends javax.swing.JFrame {
     int month = Calendar.getInstance().get(Calendar.MONTH);
     int year = Calendar.getInstance().get(Calendar.YEAR);
     int day = Calendar.getInstance().get(Calendar.DATE);
+    int profit = 0;
 
     private void addCat() {
         try {
@@ -87,6 +91,29 @@ public class saleItemX1 extends javax.swing.JFrame {
 
     }
 
+    private void setInvoiceNumber() {
+        try {
+
+            try (Connection con = databaseCon.getConn()) {
+                String sql = "SELECT MAX(inv_id)+1 From invoice";
+                PreparedStatement st = con.prepareStatement(sql);
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    int i = rs.getInt(1);
+                    if (i == 0) {
+                        txtInvoiceNumber.setText("1");
+                    } else {
+                        txtInvoiceNumber.setText(rs.getString(1));
+                    }
+
+                }
+                con.close();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
     private void columnSum() {
         int total = 0;
         for (int i = 0; i < tableMain.getRowCount(); i++) {
@@ -112,23 +139,23 @@ public class saleItemX1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         toolX2 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtInvoiceNumber = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCustomer = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDate = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableMain = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnDone = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         totalAmount = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lBalance = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtDiscount = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -141,11 +168,11 @@ public class saleItemX1 extends javax.swing.JFrame {
 
         jLabel1.setText("Invoice #");
 
-        jTextField1.setText("0");
+        txtInvoiceNumber.setText("0");
 
         jLabel2.setText("Customer :");
 
-        jTextField2.setText("Name");
+        txtCustomer.setText("Name");
 
         jLabel3.setText("Date:");
 
@@ -195,10 +222,10 @@ public class saleItemX1 extends javax.swing.JFrame {
             tableMain.getColumnModel().getColumn(4).setPreferredWidth(70);
         }
 
-        jButton1.setText("Done");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDone.setText("Done");
+        btnDone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDoneActionPerformed(evt);
             }
         });
 
@@ -219,7 +246,12 @@ public class saleItemX1 extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Cancel");
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("...");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -241,11 +273,11 @@ public class saleItemX1 extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1))
+                                .addComponent(txtInvoiceNumber))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(103, 103, 103)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -263,9 +295,9 @@ public class saleItemX1 extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(296, 296, 296)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -284,7 +316,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtInvoiceNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
@@ -293,17 +325,17 @@ public class saleItemX1 extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(toolX2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnDone)
                     .addComponent(jLabel5)
                     .addComponent(totalAmount)
-                    .addComponent(jButton4))
+                    .addComponent(btnCancel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -312,7 +344,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(lBalance))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -343,9 +375,39 @@ public class saleItemX1 extends javax.swing.JFrame {
         txtDate.setText(getDate(txtDate.getText()));
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
+saveInvoice();
+    }//GEN-LAST:event_btnDoneActionPerformed
+    private void saveInvoice() {
+        try {
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+            java.util.Date invoiceDate = formatDate.parse(txtDate.getText());
+            java.sql.Date sqlDate = new java.sql.Date(invoiceDate.getTime());
+            String sql = "INSERT INTO `myinventory`.`invoice` ( `inv_id`, `customer`, `saledate`, `totalAmount`, `Discount` ,`Profit`) VALUES (?, ?, ?,?, ?,?)";
+            try {
+                Connection con = databaseCon.getConn();
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setInt(1, Integer.parseInt(txtInvoiceNumber.getText()));
+                st.setString(2, txtCustomer.getText());
+                st.setDate(3,sqlDate);
+                st.setInt(4,Integer.parseInt(totalAmount.getText()));
+                st.setInt(5,Integer.parseInt(txtDiscount.getText()));
+                st.setInt(6,profit);
+                st.executeUpdate();
+                con.close();
+                this.setVisible(false);
+                this.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(saleItemX1.class.getName()).log(Level.SEVERE,null, ex);
+        }
+    }
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
     private String getDate(String curDate) {
         String rDate = curDate;
         mDatePicker dp = new mDatePicker(null);
@@ -394,8 +456,8 @@ public class saleItemX1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDone;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -406,15 +468,15 @@ public class saleItemX1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lBalance;
     private javax.swing.JTable tableMain;
     private javax.swing.JToolBar toolX2;
     private javax.swing.JLabel totalAmount;
+    private javax.swing.JTextField txtCustomer;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtDiscount;
+    private javax.swing.JTextField txtInvoiceNumber;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JButton x1;
 }

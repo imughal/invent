@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: myinventory
 -- ------------------------------------------------------
@@ -79,13 +79,13 @@ DROP TABLE IF EXISTS `invoice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoice` (
-  `idinvoice` int(11) NOT NULL,
+  `inv_id` int(11) NOT NULL,
   `customer` varchar(45) COLLATE utf8_bin NOT NULL DEFAULT 'Cash',
-  `createddate` date NOT NULL,
+  `saledate` date NOT NULL,
   `totalAmount` int(10) unsigned zerofill NOT NULL,
   `Discount` int(10) unsigned zerofill NOT NULL,
   `Profit` int(10) unsigned zerofill NOT NULL,
-  PRIMARY KEY (`idinvoice`)
+  PRIMARY KEY (`inv_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,6 +95,7 @@ CREATE TABLE `invoice` (
 
 LOCK TABLES `invoice` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+INSERT INTO `invoice` VALUES (1,'Name','2016-04-12',0000000000,0000000000,0000000000);
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,8 +111,7 @@ CREATE TABLE `invoicedetails` (
   `item` varchar(45) COLLATE utf8_bin NOT NULL,
   `qty` int(11) NOT NULL,
   `unitPrice` int(11) NOT NULL,
-  `profit` int(11) NOT NULL,
-  `saleDate` date NOT NULL
+  `saledate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='	';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-10 19:57:34
+-- Dump completed on 2016-04-12  1:25:18

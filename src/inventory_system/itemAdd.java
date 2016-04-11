@@ -164,6 +164,7 @@ public class itemAdd extends javax.swing.JDialog {
     }
 
     ArrayList<String> qtys = new ArrayList<>();
+    ArrayList<String> item_ids = new ArrayList<>();
     ArrayList<String> itemName = new ArrayList<>();
     ArrayList<Object> rList = new ArrayList<>();
 
@@ -178,6 +179,7 @@ public class itemAdd extends javax.swing.JDialog {
                 while (rs.next()) {
 
                     qtys.add(rs.getString("qty"));
+                    item_ids.add(rs.getString("item_id"));
                     //cmbItem.addItem(rs.getString("item"));
                     itemName.add(rs.getString("item"));
                 }
@@ -209,9 +211,28 @@ public class itemAdd extends javax.swing.JDialog {
     private void cmbItemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbItemItemStateChanged
         //int qtyo = qtys.indexOf(cmbItem.getSelectedIndex());
         tAvail.setText(qtys.get(cmbItem.getSelectedIndex()));
+        getSelectedData(item_ids.get(cmbItem.getSelectedIndex()));
         //JOptionPane.showMessageDialog(null, cmbItem.getSelectedIndex());
     }//GEN-LAST:event_cmbItemItemStateChanged
+private void getSelectedData(String id){
+            try {
 
+            try (Connection con = databaseCon.getConn()) {
+                String sql = "SELECT * From invitems where item_id = ?";
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setString(1, id);
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+
+
+                }
+                con.close();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int avail = Integer.parseInt(tAvail.getText());
         if ((int) SpinQty.getValue() > avail) {
