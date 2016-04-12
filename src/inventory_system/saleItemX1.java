@@ -42,11 +42,15 @@ public class saleItemX1 extends javax.swing.JFrame {
     ArrayList<JButton> buttons = new ArrayList<>();
     ArrayList<String> bNames = new ArrayList<>();
     ArrayList<String> bcat_id = new ArrayList<>();
+    ArrayList<ArrayList<Object>> toDecrease = new ArrayList<>();
+    ArrayList<ArrayList<Object>> items = new ArrayList<>();
+
     int sn = 0;
     int month = Calendar.getInstance().get(Calendar.MONTH);
     int year = Calendar.getInstance().get(Calendar.YEAR);
     int day = Calendar.getInstance().get(Calendar.DATE);
     int profit = 0;
+    int actualTotal = 0;
 
     private void addCat() {
         try {
@@ -76,10 +80,30 @@ public class saleItemX1 extends javax.swing.JFrame {
                     ArrayList<Object> iii = ia.adding(bcat_id.get(k), rows);
 
                     if (!iii.isEmpty()) {
-                        
-//                        DefaultTableModel model = (DefaultTableModel) tableMain.getModel();
-//                        model.addRow(iii.toArray());
-//                        columnSum();
+//                        for (int i = 0; i < iii.size(); i++) {
+//                            JOptionPane.showMessageDialog(null, iii.get(i));
+//                        }
+                        ArrayList<Object> dec = new ArrayList<>();
+                        dec.add(iii.get(0));
+                        dec.add(iii.get(1));
+//                        for (int i = 0; i < dec.size(); i++) {
+//                            JOptionPane.showMessageDialog(null, dec.get(i));
+//                        }
+                        toDecrease.add(dec);
+                        ArrayList<Object> itemDB = getItembyID((String) iii.get(0));
+//                        for (int i = 0; i < itemDB.size(); i++) {
+//                            JOptionPane.showMessageDialog(null, itemDB.get(i));
+//                        }
+                        //actualTotal = actualTotal + (Integer)itemDB.get(5);
+                        ArrayList<Object> item = new ArrayList<>();
+
+                        item.add(itemDB.get(1));
+                        item.add(iii.get(1));
+                        item.add(iii.get(2));
+                        item.add((Integer) iii.get(1) * (Integer) iii.get(2));
+
+                        items.add(item);
+                        buildTable(items);
 
                     }
                 }
@@ -90,6 +114,51 @@ public class saleItemX1 extends javax.swing.JFrame {
             i++;
         }
 
+    }
+
+    private void buildTable(ArrayList<ArrayList<Object>> itemss) {
+        int row = 1;
+        DefaultTableModel model = (DefaultTableModel) tableMain.getModel();
+        model.setRowCount(0);
+        for (ArrayList<Object> itemx : itemss) {
+            Object[] itemxs = new Object[itemx.size() + 1];
+            itemxs[0] = row;
+            itemxs[1] = itemx.get(0);
+            itemxs[2] = itemx.get(1);
+            itemxs[3] = itemx.get(2);
+            itemxs[4] = itemx.get(3);
+ //           itemxs[5] = itemx.get(4);
+
+            model.addRow(itemxs);
+            columnSum();
+            row++;
+        }
+    }
+
+    private ArrayList<Object> getItembyID(String ID) {
+        ArrayList<Object> list = new ArrayList<>();
+        try {
+
+            try (Connection con = databaseCon.getConn()) {
+                String sql = "SELECT * From invitems where item_id = ?";
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setString(1, ID);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    int column = rs.getMetaData().getColumnCount();
+                    for (int i = 1; i <= column; i++) {
+                        list.add(rs.getString(i));
+                        //JOptionPane.showMessageDialog(null, "ok item data");
+                    }
+                }
+                con.close();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return list;
     }
 
     private void setInvoiceNumber() {
@@ -377,7 +446,7 @@ public class saleItemX1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
-saveInvoice();
+        saveInvoice();
     }//GEN-LAST:event_btnDoneActionPerformed
     private void saveInvoice() {
         try {
@@ -390,10 +459,10 @@ saveInvoice();
                 PreparedStatement st = con.prepareStatement(sql);
                 st.setInt(1, Integer.parseInt(txtInvoiceNumber.getText()));
                 st.setString(2, txtCustomer.getText());
-                st.setDate(3,sqlDate);
-                st.setInt(4,Integer.parseInt(totalAmount.getText()));
-                st.setInt(5,Integer.parseInt(txtDiscount.getText()));
-                st.setInt(6,profit);
+                st.setDate(3, sqlDate);
+                st.setInt(4, Integer.parseInt(totalAmount.getText()));
+                st.setInt(5, Integer.parseInt(txtDiscount.getText()));
+                st.setInt(6, profit);
                 st.executeUpdate();
                 con.close();
                 this.setVisible(false);
@@ -402,7 +471,7 @@ saveInvoice();
                 JOptionPane.showMessageDialog(null, e);
             }
         } catch (ParseException ex) {
-            Logger.getLogger(saleItemX1.class.getName()).log(Level.SEVERE,null, ex);
+            Logger.getLogger(saleItemX1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
