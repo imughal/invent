@@ -76,9 +76,10 @@ public class saleItemX1 extends javax.swing.JFrame {
                     ArrayList<Object> iii = ia.adding(bcat_id.get(k), rows);
 
                     if (!iii.isEmpty()) {
-                        DefaultTableModel model = (DefaultTableModel) tableMain.getModel();
-                        model.addRow(iii.toArray());
-                        columnSum();
+                        
+//                        DefaultTableModel model = (DefaultTableModel) tableMain.getModel();
+//                        model.addRow(iii.toArray());
+//                        columnSum();
 
                     }
                 }

@@ -211,7 +211,7 @@ public class itemAdd extends javax.swing.JDialog {
     private void cmbItemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbItemItemStateChanged
         //int qtyo = qtys.indexOf(cmbItem.getSelectedIndex());
         tAvail.setText(qtys.get(cmbItem.getSelectedIndex()));
-        getSelectedData(item_ids.get(cmbItem.getSelectedIndex()));
+//        getSelectedData(item_ids.get(cmbItem.getSelectedIndex()));
         //JOptionPane.showMessageDialog(null, cmbItem.getSelectedIndex());
     }//GEN-LAST:event_cmbItemItemStateChanged
 private void getSelectedData(String id){
@@ -239,11 +239,15 @@ private void getSelectedData(String id){
             JOptionPane.showMessageDialog(null, "Error, Quantity Out of Stock");
         } else {
 
-            rList.add(row);
-            rList.add((String) cmbItem.getSelectedItem());
-            rList.add(SpinQty.getValue().toString());
-            rList.add(unitPrice.getValue().toString());
-            rList.add(tAmount.getText());
+//            rList.add(row);
+//            rList.add((String) cmbItem.getSelectedItem());
+//            rList.add(SpinQty.getValue().toString());
+//            rList.add(unitPrice.getValue().toString());
+//            rList.add(tAmount.getText());
+
+            rList.add(item_ids.get(cmbItem.getSelectedIndex()));
+            rList.add((Integer) SpinQty.getValue());
+            rList.add((Integer) unitPrice.getValue());
 
             this.setVisible(false);
             this.dispose();
