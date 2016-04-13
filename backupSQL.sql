@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: myinventory
 -- ------------------------------------------------------
@@ -67,7 +67,7 @@ CREATE TABLE `invitems` (
 
 LOCK TABLES `invitems` WRITE;
 /*!40000 ALTER TABLE `invitems` DISABLE KEYS */;
-INSERT INTO `invitems` VALUES (1,'sooper',100,1,'2016-03-25',120),(2,'light',139,2,NULL,55),(3,'boom boom',100,5,NULL,75),(4,'dssss',102,11,'2016-03-27',4),(5,'df',4,11,'2016-03-27',33),(6,'fe',33,6,'2016-03-27',4),(7,'Ding Dong',100,5,'2016-04-06',20);
+INSERT INTO `invitems` VALUES (1,'sooper',98,1,'2016-03-25',120),(2,'light',139,2,NULL,55),(3,'boom boom',100,5,NULL,75),(4,'dssss',102,11,'2016-03-27',4),(5,'df',4,11,'2016-03-27',33),(6,'fe',33,6,'2016-03-27',4),(7,'Ding Dong',100,5,'2016-04-06',20);
 /*!40000 ALTER TABLE `invitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `invoice` (
 
 LOCK TABLES `invoice` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
-INSERT INTO `invoice` VALUES (1,'Name','2016-04-12',1,1,1);
+INSERT INTO `invoice` VALUES (1,'Name','2016-04-12',1,1,1),(2,'Name','2016-04-14',28,0,0),(3,'Name','2016-04-14',6,0,0),(4,'Name','2016-04-14',0,0,0);
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-12 19:56:36
+-- Dump completed on 2016-04-14  0:51:10

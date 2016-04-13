@@ -472,7 +472,25 @@ public class saleItemX1 extends javax.swing.JFrame {
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         saveInvoice();
+        decItem();
     }//GEN-LAST:event_btnDoneActionPerformed
+    private void decItem() {
+        for (ArrayList<Object> e : toDecrease) {
+            String sql = "UPDATE `myinventory`.`invitems` SET qty = qty - ? WHERE item_id = ?";
+            try {
+                Connection con = databaseCon.getConn();
+                PreparedStatement st = con.prepareStatement(sql);
+                //int pk = Integer.parseInt(txtItemQty.getText()) + Integer.parseInt(curQty);
+                st.setInt(1,(Integer) e.get(1));
+                st.setString(2, (String) e.get(0));
+                st.executeUpdate();
+                con.close();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+    }
+
     private void saveInvoice() {
         try {
             SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
