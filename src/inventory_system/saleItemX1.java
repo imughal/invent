@@ -30,7 +30,7 @@ public class saleItemX1 extends javax.swing.JFrame {
         setDate();
         setInvoiceNumber();
     }
-
+    
     private void setDate() {
         SimpleDateFormat sDate = new SimpleDateFormat("dd-MM-yyyy");
         Calendar gCal = Calendar.getInstance();
@@ -38,23 +38,23 @@ public class saleItemX1 extends javax.swing.JFrame {
         //viewStudent.setingText(txtField, sDate.format(gCal.getTime()));
         txtDate.setText(sDate.format(gCal.getTime()));
     }
-
+    
     ArrayList<JButton> buttons = new ArrayList<>();
     ArrayList<String> bNames = new ArrayList<>();
     ArrayList<String> bcat_id = new ArrayList<>();
     ArrayList<ArrayList<Object>> toDecrease = new ArrayList<>();
     ArrayList<ArrayList<Object>> items = new ArrayList<>();
-
+    
     int sn = 0;
     int month = Calendar.getInstance().get(Calendar.MONTH);
     int year = Calendar.getInstance().get(Calendar.YEAR);
     int day = Calendar.getInstance().get(Calendar.DATE);
     int profit = 0;
     int actualTotal = 0;
-
+    
     private void addCat() {
         try {
-
+            
             try (Connection con = databaseCon.getConn()) {
                 String sql = "SELECT * From categories";
                 PreparedStatement st = con.prepareStatement(sql);
@@ -78,7 +78,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                     int rows = tableMain.getRowCount();
                     itemAdd ia = new itemAdd();
                     ArrayList<Object> iii = ia.adding(bcat_id.get(k), rows);
-
+                    
                     if (!iii.isEmpty()) {
 //                        for (int i = 0; i < iii.size(); i++) {
 //                            JOptionPane.showMessageDialog(null, iii.get(i));
@@ -96,26 +96,26 @@ public class saleItemX1 extends javax.swing.JFrame {
 //                        }
                         actualTotal = actualTotal + Integer.parseInt((String) itemDB.get(5));
                         ArrayList<Object> item = new ArrayList<>();
-
+                        
                         item.add(itemDB.get(1));
                         item.add(iii.get(1));
                         item.add(iii.get(2));
                         item.add((Integer) iii.get(1) * (Integer) iii.get(2));
-
+                        
                         items.add(item);
                         buildTable(items);
-
+                        
                     }
                 }
             });
             toolX2.add(x1);
             toolX2.add(new javax.swing.JToolBar.Separator());
-
+            
             i++;
         }
-
+        
     }
-
+    
     private void buildTable(ArrayList<ArrayList<Object>> itemss) {
         int row = 1;
         DefaultTableModel model = (DefaultTableModel) tableMain.getModel();
@@ -134,17 +134,17 @@ public class saleItemX1 extends javax.swing.JFrame {
             row++;
         }
     }
-
+    
     private ArrayList<Object> getItembyID(String ID) {
         ArrayList<Object> list = new ArrayList<>();
         try {
-
+            
             try (Connection con = databaseCon.getConn()) {
                 String sql = "SELECT * From invitems where item_id = ?";
                 PreparedStatement st = con.prepareStatement(sql);
                 st.setString(1, ID);
                 ResultSet rs = st.executeQuery();
-
+                
                 while (rs.next()) {
                     int column = rs.getMetaData().getColumnCount();
                     for (int i = 1; i <= column; i++) {
@@ -154,16 +154,16 @@ public class saleItemX1 extends javax.swing.JFrame {
                 }
                 con.close();
             }
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return list;
     }
-
+    
     private void setInvoiceNumber() {
         try {
-
+            
             try (Connection con = databaseCon.getConn()) {
                 String sql = "SELECT MAX(inv_id)+1 From invoice";
                 PreparedStatement st = con.prepareStatement(sql);
@@ -175,7 +175,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                     } else {
                         txtInvoiceNumber.setText(rs.getString(1));
                     }
-
+                    
                 }
                 con.close();
             }
@@ -183,14 +183,14 @@ public class saleItemX1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+    
     private void columnSum() {
         int total = 0;
         for (int i = 0; i < tableMain.getRowCount(); i++) {
-
+            
             int Amount = Integer.parseInt(tableMain.getValueAt(i, 4) + "");
             total = Amount + total;
-
+            
         }
         totalAmount.setText(Integer.toString(total));
         int b = total - Integer.parseInt(txtDiscount.getText());
@@ -472,6 +472,11 @@ public class saleItemX1 extends javax.swing.JFrame {
 
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         saveInvoice();
+        for (ArrayList<Object> itemx : items) {
+            
+            saveInvoiceItems(itemx);
+        }
+        
         decItem();
     }//GEN-LAST:event_btnDoneActionPerformed
     private void decItem() {
@@ -481,7 +486,7 @@ public class saleItemX1 extends javax.swing.JFrame {
                 Connection con = databaseCon.getConn();
                 PreparedStatement st = con.prepareStatement(sql);
                 //int pk = Integer.parseInt(txtItemQty.getText()) + Integer.parseInt(curQty);
-                st.setInt(1,(Integer) e.get(1));
+                st.setInt(1, (Integer) e.get(1));
                 st.setString(2, (String) e.get(0));
                 st.executeUpdate();
                 con.close();
@@ -490,7 +495,34 @@ public class saleItemX1 extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    private void saveInvoiceItems(ArrayList<Object> itemsx) {
+        String itemName = (String) itemsx.get(0);
+        int itemQty = (Integer) itemsx.get(1);
+        int itemPrice = (Integer) itemsx.get(2);
+        try {
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+            java.util.Date invoiceDate = formatDate.parse(txtDate.getText());
+            java.sql.Date sqlDate = new java.sql.Date(invoiceDate.getTime());
+            String sql = "INSERT INTO `myinventory`.`invoicedetails` ( `inv_id`, `item`, `qty`, `unitPrice`, `saleDate`) VALUES (?, ?, ?,?, ?)";
+            try {
+                Connection con = databaseCon.getConn();
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setInt(1, Integer.parseInt(txtInvoiceNumber.getText()));
+                st.setString(2, itemName);
+                st.setInt(3, itemQty);
+                st.setInt(4, itemPrice);
+                st.setDate(5, sqlDate);
+                st.executeUpdate();
+                con.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(saleItemX1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void saveInvoice() {
         try {
             SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
@@ -508,8 +540,6 @@ public class saleItemX1 extends javax.swing.JFrame {
                 st.setInt(6, profit);
                 st.executeUpdate();
                 con.close();
-                this.setVisible(false);
-                this.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
